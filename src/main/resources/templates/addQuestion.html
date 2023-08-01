@@ -1,19 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Input Form</title>
+    <title>Stack Overflow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            background-color: #f48024;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 6px 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #e63b00;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+    </style>
 </head>
 <body>
-<form>
-    <label for="inputField">Enter your data:</label>
-    <input type="text" id="inputField" required>
-    <button type="button" onclick="submitForm()">Submit</button>
-</form>
+<div class="container">
+    <h1>Stack Overflow</h1>
+    <form onsubmit="submitForm(event)">
+        <label for="inputField">Enter your question:</label>
+        <input type="text" id="inputField" required>
+        <button type="submit">Submit</button>
+    </form>
 
-<div id="result"></div>
+    <div id="result"></div>
+</div>
 
 <script>
     function submitForm() {
+
         var dataInput = document.getElementById("inputField").value;
         var formData = {data: dataInput};
 
@@ -25,7 +84,10 @@
             body: JSON.stringify(formData)
         })
             .then(response => response.text())
-            .then(data => document.getElementById("result").innerText = data)
+            .then(data => {
+                var resultDiv = document.getElementById("result");
+                resultDiv.innerHTML = '<pre>' + data + '</pre>';
+            })
             .catch(error => console.error('Error:', error));
     }
 </script>

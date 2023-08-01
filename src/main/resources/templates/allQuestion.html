@@ -2,6 +2,64 @@
 <html>
 <head>
     <title>Question List</title>
+    <style>
+        html, body, h1, table {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            background-color: #f48024;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f6f6f6;
+        }
+
+        a {
+            color: #ff4500;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        a.delete-btn {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #ff4500;
+            color: #fff;
+            text-align: center;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        a.delete-btn:hover {
+            background-color: #e63b00;
+        }
+    </style>
 </head>
 <body>
 <h1>Question List</h1>
@@ -18,7 +76,7 @@
         <td th:text="${question.id}"></td>
         <td th:text="${question.title}"></td>
         <td>
-            <a th:href="@{'/questions/' + ${question.id}}" th:data-id="${question.id}" onclick="deleteQuestion(event)">Delete</a>
+            <a href="#" class="delete-btn" th:data-id="${question.id}" onclick="deleteQuestion(event)">Delete</a>
         </td>
     </tr>
     </tbody>
