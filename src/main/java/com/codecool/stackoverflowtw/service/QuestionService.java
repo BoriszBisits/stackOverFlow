@@ -19,8 +19,7 @@ public class QuestionService {
     }
 
     public List<QuestionDTO> getAllQuestions() {
-        // TODO
-        return  null;
+       return questionsDAO.getAllQuestion();
     }
 
     public QuestionDTO getQuestionById(int id) {

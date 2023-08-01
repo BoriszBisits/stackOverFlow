@@ -4,8 +4,11 @@ import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.dao.model.DatabaseManager;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,6 +47,27 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
     @Override
     public List<QuestionDTO> getAllQuestion() {
-        return null;
+        List<QuestionDTO> questionList = new ArrayList<>();
+
+        String query = "SELECT * FROM Questions"; // Fix the missing "FROM" keyword
+
+        try (Connection connection = databaseManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id"); // Replace "id" with the actual column name in your database
+                String title = resultSet.getString("title"); // Replace "title" with the actual column name in your database
+
+                QuestionDTO questionDTO = new QuestionDTO(id, title); // Assuming QuestionDTO has a constructor that takes id and title
+                questionList.add(questionDTO);
+            }
+
+        } catch (SQLException e) {
+            // Handle the exception appropriately, such as logging or throwing a custom exception
+            e.printStackTrace();
+        }
+
+        return questionList;
     }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Question List</title>
+</head>
+<body>
+<h1>Question List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+    </tr>
+    </thead>
+    <tbody id="questionTableBody">
+    <!-- The question data will be populated here -->
+    </tbody>
+</table>
+
+<script>
+    // Function to fetch and display the question data from the server
+    function fetchQuestionData() {
+        fetch('/questions/all')
+            .then(response => response.json())
+            .then(data => displayQuestionData(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Function to display the question data in the table
+    function displayQuestionData(data) {
+        const questionTableBody = document.getElementById('questionTableBody');
+
+        // Clear the table body to avoid duplicates
+        questionTableBody.innerHTML = '';
+
+        // Iterate through the received data and create table rows for each question
+        data.forEach(question => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td>${question.id}</td>
+                    <td>${question.title}</td>
+                `;
+            questionTableBody.appendChild(row);
+        });
+    }
+
+    // Fetch the question data when the page loads
+    window.onload = fetchQuestionData;
+</script>
+</body>
+</html>
