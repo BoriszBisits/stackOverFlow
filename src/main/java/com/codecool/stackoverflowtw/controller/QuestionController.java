@@ -26,6 +26,14 @@ public class QuestionController {
         modelAndView.addObject("questions", questions);
         return modelAndView;
     }
+  /*  @GetMapping("/all")
+    public ModelAndView getAllQuestions() {
+        List<QuestionDTO> questions = questionService.getAllQuestions();
+
+        ModelAndView modelAndView = new ModelAndView("allQuestion");
+        modelAndView.addObject("questions", questions);
+        return modelAndView;
+    }*/
 
     @GetMapping("/{id}")
     public QuestionDTO getQuestionById(@PathVariable int id) {

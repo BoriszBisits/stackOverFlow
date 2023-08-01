@@ -21,6 +21,21 @@ public class DatabaseManager {
         return connection;
     }
 
+    public boolean closeConnection() {
+        try {
+            if (connection != null) {
+                connection.close();
+                System.out.println("Database connection closed.");
+                return true;
+            }
+        } catch (SQLException e) {
+            // Handle the exception appropriately, such as logging or displaying an error message
+            e.printStackTrace();
+        }
+        return false; // Return false if the connection was not closed
+    }
+
+
 
     public boolean executeQuery(String query) {
         try {

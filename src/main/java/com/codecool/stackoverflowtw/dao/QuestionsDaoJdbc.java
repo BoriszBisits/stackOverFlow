@@ -4,6 +4,7 @@ import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.dao.model.DatabaseManager;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 public class QuestionsDaoJdbc implements QuestionsDAO {
     private DatabaseManager databaseManager;
+
 
 
     public QuestionsDaoJdbc(DatabaseManager databaseManager) {
@@ -28,6 +30,9 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
             preparedStatement.setString(1, String.valueOf(UUID.randomUUID()));
             preparedStatement.setString(2,question.title());
             preparedStatement.executeUpdate();
+            databaseManager.closeConnection();
+
+
             return 0;
         } catch (SQLException e) {
             return -1;
@@ -56,16 +61,18 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
-                String id = resultSet.getString("id"); // Replace "id" with the actual column name in your database
-                String title = resultSet.getString("title"); // Replace "title" with the actual column name in your database
+                String id = resultSet.getString("Id"); // Replace "id" with the actual column name in your database
+                String title = resultSet.getString("Title"); // Replace "title" with the actual column name in your database
 
                 QuestionDTO questionDTO = new QuestionDTO(id, title); // Assuming QuestionDTO has a constructor that takes id and title
                 questionList.add(questionDTO);
             }
+            databaseManager.closeConnection();
+
 
         } catch (SQLException e) {
             // Handle the exception appropriately, such as logging or throwing a custom exception
-            e.printStackTrace();
+           e.printStackTrace();
         }
 
         return questionList;
