@@ -15,7 +15,7 @@
 <script>
     function submitForm() {
         var dataInput = document.getElementById("inputField").value;
-        var formData = { data: dataInput };
+        var formData = {data: dataInput};
 
         fetch('/questions/processQuestion', {
             method: 'POST',
