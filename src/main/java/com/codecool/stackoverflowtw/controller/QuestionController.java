@@ -55,15 +55,16 @@ public class QuestionController {
     }
 
     @PostMapping("/processQuestion")
-    public ModelAndView processQuestion(@ModelAttribute("questionDTO") NewQuestionDTO questionDTO) {
+    public String processQuestion(@RequestBody String title) {
         // Here, you can handle the data received from the input field (questionDTO) as needed.
         // For example, you can save the question to the database using the questionService.
-        System.out.println(questionDTO);
+        //System.out.println(title);
+        NewQuestionDTO newQuestionDTO=new NewQuestionDTO(title);
+        System.out.println(newQuestionDTO.title());
+        questionService.addNewQuestion(newQuestionDTO);
 
-        ModelAndView modelAndView = new ModelAndView("resultPage");
-        modelAndView.addObject("questionText", questionDTO.title());
-        return modelAndView;
-
+        // Return the processed data, or any other response you want to send back to the client.
+        return "Your data was received on the server!";
     }
 
 }

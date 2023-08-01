@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class StackoverflowTwApplication {
-    static String dbFile = "C:/Users/Acer/IdeaProjects/stackOverFlow/src/main/resources/Stackoverflow.db";
+    static String dbFile = "C:\\Users\\PC\\codecool\\OOP\\stackOverFlow\\src\\main\\resources\\Stackoverflow.db";
     static SqliteConnector sqliteConnector = new SqliteConnector(dbFile);
     static DatabaseManager databaseManager = new DatabaseManager(sqliteConnector);
 

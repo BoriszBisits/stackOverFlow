@@ -10,19 +10,22 @@
     <button type="button" onclick="submitForm()">Submit</button>
 </form>
 
+<div id="result"></div>
+
 <script>
     function submitForm() {
         var dataInput = document.getElementById("inputField").value;
         var formData = { data: dataInput };
 
-        fetch('/questions/processQuestion', {  // Update the endpoint URL here
+        fetch('/questions/processQuestion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
-        }).then(response => response.text())
-            .then(data => alert(data))
+        })
+            .then(response => response.text())
+            .then(data => document.getElementById("result").innerText = data)
             .catch(error => console.error('Error:', error));
     }
 </script>

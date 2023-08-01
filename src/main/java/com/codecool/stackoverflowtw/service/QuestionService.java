@@ -6,7 +6,6 @@ import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,7 +33,7 @@ public class QuestionService {
         return false;
     }
 
-    public int addNewQuestion(QuestionDTO question) {
+    public int addNewQuestion(NewQuestionDTO question) {
      questionsDAO.addQuestion(question);
         return 0;
     }
