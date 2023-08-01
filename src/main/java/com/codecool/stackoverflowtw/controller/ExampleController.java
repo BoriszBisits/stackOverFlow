@@ -25,10 +25,6 @@ public class ExampleController {
         model.addAttribute("name", name);
         return "index";
     }
-    @PostMapping("/addQuestion")
-    public String addQuestion(){
-        return "addQuestion";
-    }
 
 
 }

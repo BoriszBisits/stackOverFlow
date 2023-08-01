@@ -5,6 +5,7 @@ import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -37,12 +38,32 @@ public class QuestionController {
     public boolean deleteQuestionById(@PathVariable int id) {
         return false;
     }
+
+
+  /*  @ResponseBody
+    public String processData(@RequestBody NewQuestionDTO questionDTO) {
+        addNewQuestion(questionDTO);
+
+        System.out.println(questionDTO);
+        return "addQuestion";
+    }*/
+
     @GetMapping("/addQuestion")
-    @ResponseBody
-    public String processData(@RequestParam("data") String data) {
-        // Process the string data received from the query parameter
-        // You can perform any operations with the data here
-        return "Data received: " + data;
+    public ModelAndView addQuestion() {
+        ModelAndView modelAndView = new ModelAndView("addQuestion");
+        return modelAndView;
+    }
+
+    @PostMapping("/processQuestion")
+    public ModelAndView processQuestion(@ModelAttribute("questionDTO") NewQuestionDTO questionDTO) {
+        // Here, you can handle the data received from the input field (questionDTO) as needed.
+        // For example, you can save the question to the database using the questionService.
+        System.out.println(questionDTO);
+
+        ModelAndView modelAndView = new ModelAndView("resultPage");
+        modelAndView.addObject("questionText", questionDTO.title());
+        return modelAndView;
+
     }
 
 }

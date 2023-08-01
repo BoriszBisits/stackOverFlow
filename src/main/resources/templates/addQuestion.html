@@ -6,14 +6,24 @@
 <body>
 <form>
     <label for="inputField">Enter your data:</label>
-    <input type="text" id="inputField" name="dataInput" required>
+    <input type="text" id="inputField" required>
     <button type="button" onclick="submitForm()">Submit</button>
 </form>
 
 <script>
     function submitForm() {
         var dataInput = document.getElementById("inputField").value;
-        window.location.href = '/process?data=' + encodeURIComponent(dataInput);
+        var formData = { data: dataInput };
+
+        fetch('/questions/processQuestion', {  // Update the endpoint URL here
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        }).then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => console.error('Error:', error));
     }
 </script>
 </body>
