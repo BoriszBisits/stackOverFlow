@@ -27,9 +27,8 @@ public class QuestionService {
         return null;
     }
 
-    public boolean deleteQuestionById(int id) {
-        // TODO
-        return false;
+    public boolean deleteQuestionById(String id) {
+        return questionsDAO.deleteQuestion(id);
     }
 
     public int addNewQuestion(NewQuestionDTO question) {

@@ -38,8 +38,20 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public boolean deleteQuestion(int id) {
-        return false;
+    public boolean deleteQuestion(String id) {
+        String query = "DELETE FROM QUESTIONS WHERE id = ?";
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, String.valueOf(id));
+            int rowsAffected = preparedStatement.executeUpdate();
+            connection.close();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

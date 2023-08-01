@@ -4,6 +4,8 @@ import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,8 +40,13 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteQuestionById(@PathVariable int id) {
-        return false;
+    public ResponseEntity<String> deleteQuestionById(@PathVariable String id) {
+        boolean isDeleted = questionService.deleteQuestionById(id);
+        if (isDeleted) {
+            return ResponseEntity.ok("Question deleted successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Question not found.");
+        }
     }
 
 
