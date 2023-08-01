@@ -37,4 +37,12 @@ public class QuestionController {
     public boolean deleteQuestionById(@PathVariable int id) {
         return false;
     }
+    @GetMapping("/addQuestion")
+    @ResponseBody
+    public String processData(@RequestParam("data") String data) {
+        // Process the string data received from the query parameter
+        // You can perform any operations with the data here
+        return "Data received: " + data;
+    }
+
 }

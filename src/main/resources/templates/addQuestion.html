@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Form</title>
+</head>
+<body>
+<form>
+    <label for="inputField">Enter your data:</label>
+    <input type="text" id="inputField" name="dataInput" required>
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<script>
+    function submitForm() {
+        var dataInput = document.getElementById("inputField").value;
+        window.location.href = '/process?data=' + encodeURIComponent(dataInput);
+    }
+</script>
+</body>
+</html>
