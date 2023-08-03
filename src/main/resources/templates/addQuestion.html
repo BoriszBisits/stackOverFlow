@@ -55,6 +55,19 @@
             white-space: pre-wrap;
             overflow-x: auto;
         }
+        #result {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 3px;
+            font-size: 16px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #result.success {
+            background-color: #c3e6cb;
+        }
 
     </style>
 </head>
@@ -72,6 +85,7 @@
 
 <script>
     function submitForm() {
+        event.preventDefault();
 
         var dataInput = document.getElementById("inputField").value;
         var formData = {data: dataInput};
@@ -87,6 +101,9 @@
             .then(data => {
                 var resultDiv = document.getElementById("result");
                 resultDiv.innerHTML = '<pre>' + data + '</pre>';
+                resultDiv.style.display = 'block';
+                resultDiv.classList.add('success');
+                document.getElementById("inputField").value = '';
             })
             .catch(error => console.error('Error:', error));
     }

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Answer</title>
+    <title>Stack Overflow</title>
     <style>
-        html, body, h1 {
-            margin: 0;
-            padding: 0;
+        body {
             font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         h1 {
@@ -17,44 +18,101 @@
             text-align: center;
         }
 
-        body {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+        form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         label {
-            display: block;
-            margin-bottom: 5px;
+            font-weight: bold;
+            margin-right: 10px;
         }
 
         input[type="text"] {
-            width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
+            flex: 1;
+            padding: 6px 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
         }
 
-        input[type="submit"] {
-            padding: 5px 10px;
+        button[type="submit"] {
             background-color: #ff4500;
             color: #fff;
             border: none;
+            padding: 8px 15px;
             border-radius: 3px;
             cursor: pointer;
         }
 
-        input[type="submit"]:hover {
+        button[type="submit"]:hover {
             background-color: #e63b00;
         }
+
+        pre {
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        #result {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 3px;
+            font-size: 16px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #result.success {
+            display: block;
+        }
+
     </style>
 </head>
 <body>
-<h1>Add Answer</h1>
-<form method="post" action="/questions/processAnswer">
-    <input type="hidden" name="questionId" th:value="${questionId}"/>
-    <label for="answer">Answer:</label>
-    <input type="text" id="answer" name="answer" required/>
-    <input type="submit" value="Add Answer"/>
-</form>
+<div class="container">
+    <h1>Add Answer</h1>
+    <form onsubmit="submitForm(event)">
+        <input type="hidden" id="questionIdField" th:value="${question.id}">
+        <label for="answerField">Enter your answer:</label>
+        <input type="text" id="answerField" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function submitForm(event) {
+        event.preventDefault();
+        var questionId = document.getElementById("questionIdField").value;
+        var answer = document.getElementById("answerField").value;
+        var formData = {
+            questionId: questionId,
+            answer: answer
+        };
+
+        fetch("/questions/addAnswer", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    var resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = '<pre>Answer added successfully!</pre>';
+                    resultDiv.classList.add('success');
+                } else {
+                    // Handle the error case here if needed
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
 </body>
 </html>

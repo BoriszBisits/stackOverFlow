@@ -51,7 +51,6 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         return null;
     }
 
-
     @Override
     public boolean deleteQuestion(String id) {
         String query = "DELETE FROM QUESTIONS WHERE id = ?";
@@ -105,12 +104,12 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 questionList.add(questionDTO);
             }
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return questionList;
     }
+
     @Override
     public List<String> getAnswersForQuestion(String questionId) {
         List<String> answers = new ArrayList<>();
@@ -131,5 +130,4 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
         return answers;
     }
-
 }

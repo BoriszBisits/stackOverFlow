@@ -67,44 +67,27 @@ public class QuestionController {
         return modelAndView;
     }
 
-    @RestController
-    @RequestMapping("answers")
-    public class AnswerController {
-
-        private final QuestionService questionService;
-
-        @Autowired
-        public AnswerController(QuestionService questionService) {
-            this.questionService = questionService;
-        }
-
-        @PostMapping
-        public int addAnswer(@RequestBody Map<String, String> requestBody) {
-            String questionId = requestBody.get("questionId");
-            String answer = requestBody.get("answer");
-            return questionService.addAnswer(questionId, answer);
+    @PostMapping("/addAnswer")
+    public ResponseEntity<String> addAnswer(@RequestBody Map<String, String> requestBody) {
+        String questionId = requestBody.get("questionId");
+        String answer = requestBody.get("answer");
+        int result = questionService.addAnswer(questionId, answer);
+        if (result == 0) {
+            String response = "Answer added successfully!";
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add the answer.");
         }
     }
-
-
-    @PostMapping("/processAnswer")
-    public ResponseEntity<String> addAnswer(@RequestParam String questionId, @RequestParam String answer) {
-        // Assuming you have a method in the service to add an answer for a specific question
-        // You can use a similar approach as you did for adding a question in `QuestionService`.
-        // Make sure to update the service and DAO accordingly to handle answer addition.
-
-        // For demonstration purposes, we can simply return success response.
-        return ResponseEntity.ok("Answer added successfully.");
-    }
-
 
     @GetMapping("/{id}/addAnswer")
     public ModelAndView addAnswerForm(@PathVariable String id) {
+        QuestionDTO question = questionService.getQuestionById(id);
         ModelAndView modelAndView = new ModelAndView("addAnswer");
         modelAndView.addObject("questionId", id);
+        modelAndView.addObject("question", question);
         return modelAndView;
     }
-
 
     @PostMapping("/processQuestion")
     public String processQuestion(@RequestBody String title) {
@@ -112,15 +95,13 @@ public class QuestionController {
         NewQuestionDTO newQuestionDTO=new NewQuestionDTO(title);
         String[] parts = title.substring(1, title.length() - 1).split(":");
 
-        // Extract the value from the second part
         String value = parts[1].replaceAll("\"", "");
         System.out.println(value);
         NewQuestionDTO newQuestionDTO1=new NewQuestionDTO(value);
 
-
         questionService.addNewQuestion(newQuestionDTO1);
 
-        return "Your data was received on the server!";
+        return "You added a new question!";
     }
 
 }

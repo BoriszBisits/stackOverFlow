@@ -73,6 +73,19 @@
 
         a.details-btn:hover {
             background-color: #e63b00;
+
+        } a.add-answer-btn {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #ff4500;
+            color: #fff;
+            text-align: center;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        a.add-answer-btn:hover {
+            background-color: #e63b00;
         }
 
     </style>
@@ -85,6 +98,7 @@
         <th>ID</th>
         <th>Title</th>
         <th>Show Answers</th>
+        <th>Details</th>
         <th>Delete</th>
     </tr>
     </thead>
@@ -93,7 +107,7 @@
         <td th:text="${question.id}"></td>
         <td th:text="${question.title}"></td>
         <td>
-            <a href="#" class="add-answer-btn" th:data-id="${question.id}" onclick="addAnswer(event)">Add Answer</a>
+            <a th:href="@{'/questions/' + ${question.id} + '/addAnswer'}" class="add-answer-btn">Add Answer</a>
         </td>
         <td>
             <a th:href="@{'/questions/' + ${question.id} + '/answer' }" class="details-btn">Details</a>
@@ -124,32 +138,6 @@
             alert('Failed to delete the question. Please check your network connection.');
         };
         xhr.send();
-    }
-
-    function addAnswer(event) {
-        event.preventDefault();
-        const questionId = event.target.getAttribute('data-id');
-        const answer = prompt('Enter your answer:');
-        if (answer === null || answer.trim() === '') {
-            return;
-        }
-
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/answers', true); // Assuming you have an endpoint to handle answer addition, adjust URL accordingly
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                location.reload();
-            } else {
-                console.error('Failed to add answer. Status:', xhr.status);
-                alert('Failed to add the answer. Please try again later.');
-            }
-        };
-        xhr.onerror = function () {
-            console.error('Failed to add answer. Network error.');
-            alert('Failed to add the answer. Please check your network connection.');
-        };
-        xhr.send(JSON.stringify({ questionId: questionId, answer: answer }));
     }
 
 </script>
