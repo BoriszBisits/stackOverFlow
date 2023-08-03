@@ -58,7 +58,23 @@
 
         a.delete-btn:hover {
             background-color: #e63b00;
+
         }
+
+        a.details-btn {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #ff4500;
+            color: #fff;
+            text-align: center;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        a.details-btn:hover {
+            background-color: #e63b00;
+        }
+
     </style>
 </head>
 <body>
@@ -68,6 +84,7 @@
     <tr>
         <th>ID</th>
         <th>Title</th>
+        <th>Show Answers</th>
         <th>Delete</th>
     </tr>
     </thead>
@@ -76,7 +93,10 @@
         <td th:text="${question.id}"></td>
         <td th:text="${question.title}"></td>
         <td>
-            <a href="#" class="delete-btn" th:data-id="${question.id}" onclick="deleteQuestion(event)">Delete</a>
+            <a th:href="@{'/questions/' + ${question.id} + '/answer' }" class="details-btn">Details</a>
+        </td>
+        <td>
+        <a href="#" class="delete-btn" th:data-id="${question.id}" onclick="deleteQuestion(event)">Delete</a>
         </td>
     </tr>
     </tbody>

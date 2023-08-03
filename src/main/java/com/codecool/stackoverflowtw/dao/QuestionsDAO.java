@@ -8,6 +8,7 @@ import java.util.List;
 public interface QuestionsDAO {
     int addQuestion(NewQuestionDTO question);
     List<QuestionDTO> getAllQuestion();
-    QuestionDTO getQuestionById(int id);
+    List<String> getAnswersForQuestion(String questionId);
+    QuestionDTO getQuestionById(String id);
     boolean deleteQuestion(String id);
 }

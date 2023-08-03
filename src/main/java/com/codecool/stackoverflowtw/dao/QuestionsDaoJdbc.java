@@ -33,9 +33,24 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public QuestionDTO getQuestionById(int id) {
+    public QuestionDTO getQuestionById(String id) {
+        String query = "SELECT * FROM Questions WHERE id = ?";
+        try (Connection connection = DriverManager.getConnection(DB_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String questionId = resultSet.getString("Id");
+                String title = resultSet.getString("Title");
+                return new QuestionDTO(questionId, title);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
+
 
     @Override
     public boolean deleteQuestion(String id) {
@@ -77,4 +92,25 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         }
         return questionList;
     }
+    @Override
+    public List<String> getAnswersForQuestion(String questionId) {
+        List<String> answers = new ArrayList<>();
+        String query = "SELECT Answer FROM Answer WHERE Id = ?";
+
+        try (Connection connection = DriverManager.getConnection(DB_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, questionId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String answer = resultSet.getString("Answer");
+                answers.add(answer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return answers;
+    }
+
 }

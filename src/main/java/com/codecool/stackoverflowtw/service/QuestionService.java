@@ -22,10 +22,10 @@ public class QuestionService {
        return questionsDAO.getAllQuestion();
     }
 
-    public QuestionDTO getQuestionById(int id) {
-        // TODO
-        return null;
+    public QuestionDTO getQuestionById(String id) {
+        return questionsDAO.getQuestionById(id);
     }
+
 
     public boolean deleteQuestionById(String id) {
         return questionsDAO.deleteQuestion(id);
@@ -35,4 +35,9 @@ public class QuestionService {
      questionsDAO.addQuestion(question);
         return 0;
     }
+
+    public List<String> getAnswersForQuestion(String Id) {
+        return questionsDAO.getAnswersForQuestion(Id);
+    }
+
 }

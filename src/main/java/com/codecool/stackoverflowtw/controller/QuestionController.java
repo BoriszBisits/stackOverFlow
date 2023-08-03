@@ -28,11 +28,23 @@ public class QuestionController {
         modelAndView.addObject("questions", questions);
         return modelAndView;
     }
+    @GetMapping("/{id}/answer")
+    public ModelAndView getQuestionWithAnswers(@PathVariable String id) {
+        QuestionDTO question = questionService.getQuestionById(id);
+        List<String> answers = questionService.getAnswersForQuestion(id);
+
+        ModelAndView modelAndView = new ModelAndView("questionWithAnswers");
+        modelAndView.addObject("question", question);
+        modelAndView.addObject("answers", answers);
+
+        return modelAndView;
+    }
 
     @GetMapping("/{id}")
-    public QuestionDTO getQuestionById(@PathVariable int id) {
-        return null;
+    public QuestionDTO getQuestionById(@PathVariable String id) {
+        return questionService.getQuestionById(id);
     }
+
 
     @PostMapping("/")
     public int addNewQuestion(@RequestBody NewQuestionDTO question) {
