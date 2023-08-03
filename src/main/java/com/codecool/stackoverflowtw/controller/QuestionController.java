@@ -29,6 +29,7 @@ public class QuestionController {
         modelAndView.addObject("questions", questions);
         return modelAndView;
     }
+
     @GetMapping("/{id}/answer")
     public ModelAndView getQuestionWithAnswers(@PathVariable String id) {
         QuestionDTO question = questionService.getQuestionById(id);
@@ -92,12 +93,12 @@ public class QuestionController {
     @PostMapping("/processQuestion")
     public String processQuestion(@RequestBody String title) {
         System.out.println(title);
-        NewQuestionDTO newQuestionDTO=new NewQuestionDTO(title);
+        NewQuestionDTO newQuestionDTO = new NewQuestionDTO(title);
         String[] parts = title.substring(1, title.length() - 1).split(":");
 
         String value = parts[1].replaceAll("\"", "");
         System.out.println(value);
-        NewQuestionDTO newQuestionDTO1=new NewQuestionDTO(value);
+        NewQuestionDTO newQuestionDTO1 = new NewQuestionDTO(value);
 
         questionService.addNewQuestion(newQuestionDTO1);
 
