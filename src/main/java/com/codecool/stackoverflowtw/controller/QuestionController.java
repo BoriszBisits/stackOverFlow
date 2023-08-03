@@ -58,9 +58,17 @@ public class QuestionController {
 
     @PostMapping("/processQuestion")
     public String processQuestion(@RequestBody String title) {
+        System.out.println(title);
         NewQuestionDTO newQuestionDTO=new NewQuestionDTO(title);
-        System.out.println(newQuestionDTO.title());
-        questionService.addNewQuestion(newQuestionDTO);
+        String[] parts = title.substring(1, title.length() - 1).split(":");
+
+        // Extract the value from the second part
+        String value = parts[1].replaceAll("\"", "");
+        System.out.println(value);
+        NewQuestionDTO newQuestionDTO1=new NewQuestionDTO(value);
+
+
+        questionService.addNewQuestion(newQuestionDTO1);
 
         return "Your data was received on the server!";
     }
