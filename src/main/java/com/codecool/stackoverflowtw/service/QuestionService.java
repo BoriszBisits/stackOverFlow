@@ -35,6 +35,9 @@ public class QuestionService {
      questionsDAO.addQuestion(question);
         return 0;
     }
+    public int addAnswer(String questionId, String answer) {
+        return questionsDAO.addAnswer(questionId, answer);
+    }
 
     public List<String> getAnswersForQuestion(String Id) {
         return questionsDAO.getAnswersForQuestion(Id);

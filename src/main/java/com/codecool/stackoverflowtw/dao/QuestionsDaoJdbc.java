@@ -70,6 +70,25 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
+    public int addAnswer(String questionId, String answer) {
+        String query = "INSERT INTO ANSWER(Id, Answer) VALUES ( ?, ?)";
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, questionId);
+            preparedStatement.setString(2, answer);
+            preparedStatement.executeUpdate();
+
+            connection.close();
+
+            return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
     public List<QuestionDTO> getAllQuestion() {
         List<QuestionDTO> questionList = new ArrayList<>();
 

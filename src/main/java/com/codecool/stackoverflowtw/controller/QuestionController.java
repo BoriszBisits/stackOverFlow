@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("questions")
@@ -45,7 +46,6 @@ public class QuestionController {
         return questionService.getQuestionById(id);
     }
 
-
     @PostMapping("/")
     public int addNewQuestion(@RequestBody NewQuestionDTO question) {
         return 0;
@@ -61,12 +61,50 @@ public class QuestionController {
         }
     }
 
-
     @GetMapping("/addQuestion")
     public ModelAndView addQuestion() {
         ModelAndView modelAndView = new ModelAndView("addQuestion");
         return modelAndView;
     }
+
+    @RestController
+    @RequestMapping("answers")
+    public class AnswerController {
+
+        private final QuestionService questionService;
+
+        @Autowired
+        public AnswerController(QuestionService questionService) {
+            this.questionService = questionService;
+        }
+
+        @PostMapping
+        public int addAnswer(@RequestBody Map<String, String> requestBody) {
+            String questionId = requestBody.get("questionId");
+            String answer = requestBody.get("answer");
+            return questionService.addAnswer(questionId, answer);
+        }
+    }
+
+
+    @PostMapping("/processAnswer")
+    public ResponseEntity<String> addAnswer(@RequestParam String questionId, @RequestParam String answer) {
+        // Assuming you have a method in the service to add an answer for a specific question
+        // You can use a similar approach as you did for adding a question in `QuestionService`.
+        // Make sure to update the service and DAO accordingly to handle answer addition.
+
+        // For demonstration purposes, we can simply return success response.
+        return ResponseEntity.ok("Answer added successfully.");
+    }
+
+
+    @GetMapping("/{id}/addAnswer")
+    public ModelAndView addAnswerForm(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView("addAnswer");
+        modelAndView.addObject("questionId", id);
+        return modelAndView;
+    }
+
 
     @PostMapping("/processQuestion")
     public String processQuestion(@RequestBody String title) {

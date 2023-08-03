@@ -11,4 +11,5 @@ public interface QuestionsDAO {
     List<String> getAnswersForQuestion(String questionId);
     QuestionDTO getQuestionById(String id);
     boolean deleteQuestion(String id);
+    int addAnswer(String questionId, String answer);
 }

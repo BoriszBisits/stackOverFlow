@@ -93,10 +93,13 @@
         <td th:text="${question.id}"></td>
         <td th:text="${question.title}"></td>
         <td>
+            <a href="#" class="add-answer-btn" th:data-id="${question.id}" onclick="addAnswer(event)">Add Answer</a>
+        </td>
+        <td>
             <a th:href="@{'/questions/' + ${question.id} + '/answer' }" class="details-btn">Details</a>
         </td>
         <td>
-        <a href="#" class="delete-btn" th:data-id="${question.id}" onclick="deleteQuestion(event)">Delete</a>
+            <a href="#" class="delete-btn" th:data-id="${question.id}" onclick="deleteQuestion(event)">Delete</a>
         </td>
     </tr>
     </tbody>
@@ -122,6 +125,33 @@
         };
         xhr.send();
     }
+
+    function addAnswer(event) {
+        event.preventDefault();
+        const questionId = event.target.getAttribute('data-id');
+        const answer = prompt('Enter your answer:');
+        if (answer === null || answer.trim() === '') {
+            return;
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/answers', true); // Assuming you have an endpoint to handle answer addition, adjust URL accordingly
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                location.reload();
+            } else {
+                console.error('Failed to add answer. Status:', xhr.status);
+                alert('Failed to add the answer. Please try again later.');
+            }
+        };
+        xhr.onerror = function () {
+            console.error('Failed to add answer. Network error.');
+            alert('Failed to add the answer. Please check your network connection.');
+        };
+        xhr.send(JSON.stringify({ questionId: questionId, answer: answer }));
+    }
+
 </script>
 
 </body>
