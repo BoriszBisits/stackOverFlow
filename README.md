@@ -27,9 +27,9 @@ Viktor Pintácsi-Farkas
 Balázs Füredi
 
 Contact
-Balázs Füredi
-LinkedIn: www.linkedin.com/in/balázs60
-Email: f.balozs60@gmail.com
+Borisz Bisits
+LinkedIn: www.linkedin.com/in/ borisz-bisits
+Email: boriszbis@gmail.com
 
 Tihamér Antal
 LinkedIn: www.linkedin.com/in/tihamer-antal/
